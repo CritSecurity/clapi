@@ -1,6 +1,9 @@
 :root {
     --cs_blue: #154194;
     --cs_lightblue: #D4D9F6;
+    --cs_blue_darkmode: #04273f;
+    --cs_blue_superdark: #001636;
+    --chalk_white: #929599;
 
 }
 
@@ -168,16 +171,24 @@ header .menuItem img {
 
 
 body.dark {
-    color: white;
-    background-color: #002338;
+    color: var(--chalk_white);
+    background-color: var(--cs_blue_darkmode);
+}
+
+body.dark header {
+    background-color: var(--cs_blue_superdark);
+}
+
+body.dark header .menuItem,  body.dark header li {
+    color: var(--chalk_white)
 }
 
 body.dark h1, body.dark h2, body.dark h3 {
-    color: white!important;
+    color: var(--chalk_white)!important;
 }
 
 body.dark table, body.dark table tr th, body.dark table tr td {
-    color: white!important;
+    color: var(--chalk_white)!important;
 }
 
 body.dark table tbody tr:hover {
@@ -189,5 +200,11 @@ body.dark table tbody tr:nth-child(odd) {
 }
 
 body.dark #notificationBox {
-    border: 1px solid white;
+    border: 1px solid var(--chalk_white)!important;
+    background-color: var(--cs_blue_superdark);
+}
+
+body.dark #urlField {
+    background-color: #26282a;
+    color: var(--chalk_white);
 }
