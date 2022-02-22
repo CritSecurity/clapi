@@ -18,6 +18,7 @@ class UserEnumerate {
 
     render() {
         let ui = `<div id="outputField">
+            <h2>Enumerate Users</h2>
             <table  class="table table-striped table-hover">
                 <thead>
                     <tr>
