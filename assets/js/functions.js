@@ -1,11 +1,14 @@
-function notification(notificationText) {
+function notification(notificationText, duration) {
+    if(!duration) {duration = 2500}
     let notificationBox = document.querySelector("#notificationBox")
     notificationBox.querySelector("#message").innerText = notificationText
     notificationBox.style.display = 'block'
-    window.setTimeout(() => {
-        hideNotification()
-    }, 2500)
+    if (duration !== 0) {
+        window.setTimeout(() => {
+            hideNotification()
+        }, duration)
 
+    }
 }
 
 function hideNotification() {

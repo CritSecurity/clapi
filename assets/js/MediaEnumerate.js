@@ -108,7 +108,7 @@ class MediaEnumerate {
             localStorage.setItem(this.getKeyName(), JSON.stringify(data))
         } catch (e) {
             console.error(e)
-            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.")
+            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.", 0)
         }
 
     }
