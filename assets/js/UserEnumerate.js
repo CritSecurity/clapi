@@ -23,7 +23,11 @@ class UserEnumerate {
             </table>
         </div>`
         this.targetNode.innerHTML = ui
-        document.querySelector("#runContainer").innerHTML = `<button class="btn btn-primary" onclick="app.currentModule.checkWithURL()" id="checkButton">Run</button>`
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.checkWithURL()" id="checkButton">Run</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
+                       <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
+                        `
+        document.querySelector("#runContainer").innerHTML = buttons
     }
 
     async checkWithURL() {
@@ -62,11 +66,26 @@ class UserEnumerate {
         return usersHTML
     }
 
+    forceRun() {
+        this.executed = false
+        this.checkWithURL()
+    }
+
     async load() {
         return JSON.parse(localStorage.getItem("userenumerate"))
     }
 
     persist(data) {
         localStorage.setItem("userenumerate", JSON.stringify(data))
+    }
+
+    async exportCSV() {
+        let data = await this.load()
+        let csvData = ["id;name;slug"]
+        data.forEach(user => {
+            csvData.push(`${user.id};${user.name};${user.slug}`)
+        })
+
+        download(csvData.join("\n"), `users_${app.getDomainName()}.csv`, "text/csv")
     }
 }
