@@ -2,6 +2,11 @@ class MediaEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
+
+        if (localStorage.getItem("mediaenumerate")) {
+            this.executed = true
+            this.getMedia()
+        }
     }
 
     render() {
