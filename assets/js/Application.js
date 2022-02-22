@@ -42,4 +42,8 @@ class Application {
             this.currentModule.render()
         }
     }
+
+    getDomainName() {
+       return this.targetDomain.replace("https://", "").replace("http://", "").replace(".", "").replace("/", "")
+    }
 }
