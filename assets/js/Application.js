@@ -54,7 +54,7 @@ class Application {
 
     getDomainName() {
         if (this.targetDomain) {
-            return this.targetDomain.replace("https://", "").replace("http://", "").replace(".", "").replace("/", "")
+            return this.targetDomain.replace("https://", "").replace("http://", "").replace(/\./g, "-").replace(/\//g, "")
         } else {
             notification("Keine Zieldomain gesetzt")
             return "nodomain"
