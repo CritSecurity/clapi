@@ -130,4 +130,33 @@ header .menuItem img {
     /*background-color: var(--cs_lightblue);*/
 }
 
+#lightmodeSwitch {
+    float: right;
+    margin-right: 10px;
+}
 
+
+body.dark {
+    color: white;
+    background-color: #002338;
+}
+
+body.dark h1, body.dark h2, body.dark h3 {
+    color: white!important;
+}
+
+body.dark table, body.dark table tr th, body.dark table tr td {
+    color: white!important;
+}
+
+body.dark table tbody tr:hover {
+    background-color: unset!important;
+}
+
+body.dark table tbody tr:nth-child(odd) {
+    background-color: rgba(212, 217, 246, 0.13);
+}
+
+body.dark #notificationBox {
+    border: 1px solid white;
+}

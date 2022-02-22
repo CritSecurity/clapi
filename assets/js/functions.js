@@ -48,3 +48,17 @@ function download(data, filename, type) {
         }, 0);
     }
 }
+
+function toggleLightMode() {
+    if (document.body.classList.contains('dark')) {
+        // switch to light
+        document.body.classList.remove("dark")
+
+
+
+    } else {
+        // switch to dark
+        document.body.classList.add("dark")
+
+    }
+}
