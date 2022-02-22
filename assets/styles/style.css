@@ -1,6 +1,6 @@
 :root {
     --cs_blue: #154194;
-    --cs_lightblue: #9fa5c2;
+    --cs_lightblue: #D4D9F6;
 
 }
 
@@ -10,6 +10,7 @@ header {
     height: 50px;
     line-height: 50px;
     box-sizing: border-box;
+    padding-left: 15px;
 }
 
 main {
@@ -21,10 +22,11 @@ footer {
     bottom: 0px;
     left: 0px;
     height: 40px;
+    padding-left: 15px;
 }
 
 footer img {
-    height: 35px;
+    height: 40px;
 }
 
 h1, h2, h3 {
@@ -50,6 +52,14 @@ header ul li {
 header .menuItem {
     display: inline-block;
     line-height: 50px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+header .menuItem img {
+    height: 40px;
+    display: inline-block;
+    line-height: inherit;
 }
 
 
@@ -62,8 +72,9 @@ header .menuItem {
     display: block;
     margin-top: 20px;
     left: 20px;
-    height: 80vh;
+    height: 85vh;
     width: 100%;
+    overflow-y: scroll;
 }
 
 #notificationContainer {
