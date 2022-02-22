@@ -33,7 +33,8 @@ class MediaEnumerate {
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getMedia()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>
-                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia">Export RAW</button>`
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia">Export RAW</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearMedia">Clear</button>`
         document.querySelector("#runContainer").innerHTML = buttons
     }
 
@@ -126,5 +127,11 @@ class MediaEnumerate {
     async exportRAW() {
         let data = JSON.stringify(this.store)
         download(data, `media_${app.getDomainName()}.json`, "application/json")
+    }
+
+    clearPersistence() {
+        if (confirm("Möchten Sie die Daten der Media Enumeration wirklich löschen?")) {
+            localStorage.removeItem(this.getKeyName())
+        }
     }
 }

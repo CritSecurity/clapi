@@ -35,6 +35,7 @@ class UserEnumerate {
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
+                       <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearUser">Clear</button>
                         `
         document.querySelector("#runContainer").innerHTML = buttons
     }
@@ -108,5 +109,11 @@ class UserEnumerate {
     async exportRAW() {
         let data = JSON.stringify(this.store)
         download(data, `users_${app.getDomainName()}.json`, "application/json")
+    }
+
+    clearPersistence() {
+        if (confirm("Möchten Sie die Daten der User Enumeration wirklich löschen?")) {
+            localStorage.removeItem(this.getKeyName())
+        }
     }
 }
