@@ -24,7 +24,10 @@ class MediaEnumerate {
             </table>
         </div>`
         this.targetNode.innerHTML = ui
-        document.querySelector("#runContainer").innerHTML = `<button class="btn btn-primary" onclick="app.currentModule.getMedia()" id="checkButton">Run</button>`
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getMedia()" id="checkButton">Run</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>`
+        document.querySelector("#runContainer").innerHTML = buttons
     }
 
     async getMedia() {
@@ -81,11 +84,26 @@ class MediaEnumerate {
         return mediaHTML
     }
 
+    forceRun() {
+        this.executed = false
+        this.getMedia()
+    }
+
     async load() {
         return JSON.parse(localStorage.getItem("mediaenumerate"))
     }
 
     persist(data) {
         localStorage.setItem("mediaenumerate", JSON.stringify(data))
+    }
+
+    async exportCSV() {
+        let data = await this.load()
+        let csvData = ["filename;mime;uploaded;url"]
+        data.forEach(media => {
+            csvData.push(`${media.slug};${media.mime_type};${media.date};${media.source_url}`)
+        })
+
+        download(csvData.join("\n"), `media_${app.getDomainName()}.csv`, "text/csv")
     }
 }
