@@ -2,11 +2,17 @@ class UserEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
+        this.keyname = this.getKeyName()
 
-        if (localStorage.getItem("userenumerate")) {
+        if (localStorage.getItem(this.keyname)) {
             this.executed = true
             this.checkWithURL()
         }
+    }
+
+    getKeyName() {
+        this.keyname = `${app.getDomainName()}_userenumerate`
+        return this.keyname
     }
 
     render() {
@@ -72,11 +78,11 @@ class UserEnumerate {
     }
 
     async load() {
-        return JSON.parse(localStorage.getItem("userenumerate"))
+        return JSON.parse(localStorage.getItem(this.getKeyName()))
     }
 
     persist(data) {
-        localStorage.setItem("userenumerate", JSON.stringify(data))
+        localStorage.setItem(this.getKeyName(), JSON.stringify(data))
     }
 
     async exportCSV() {

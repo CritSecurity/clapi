@@ -48,10 +48,17 @@ class Application {
 
         if (this.currentModule) {
             this.currentModule.render()
+            this.currentModule.getKeyName()
         }
     }
 
     getDomainName() {
-       return this.targetDomain.replace("https://", "").replace("http://", "").replace(".", "").replace("/", "")
+        if (this.targetDomain) {
+            return this.targetDomain.replace("https://", "").replace("http://", "").replace(".", "").replace("/", "")
+        } else {
+            notification("Keine Zieldomain gesetzt")
+            return "nodomain"
+        }
+
     }
 }

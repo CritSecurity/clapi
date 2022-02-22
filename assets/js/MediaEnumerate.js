@@ -2,11 +2,17 @@ class MediaEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
+        this.keyname = this.getKeyName()
 
-        if (localStorage.getItem("mediaenumerate")) {
+        if (localStorage.getItem(this.keyname)) {
             this.executed = true
             this.getMedia()
         }
+    }
+
+    getKeyName() {
+        this.keyname = `${app.getDomainName()}_mediaenumerate`
+        return this.keyname
     }
 
     render() {
@@ -90,11 +96,11 @@ class MediaEnumerate {
     }
 
     async load() {
-        return JSON.parse(localStorage.getItem("mediaenumerate"))
+        return JSON.parse(localStorage.getItem(this.keyname))
     }
 
     persist(data) {
-        localStorage.setItem("mediaenumerate", JSON.stringify(data))
+        localStorage.setItem(this.keyname, JSON.stringify(data))
     }
 
     async exportCSV() {
