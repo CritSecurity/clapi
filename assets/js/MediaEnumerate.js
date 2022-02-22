@@ -32,7 +32,8 @@ class MediaEnumerate {
         this.targetNode.innerHTML = ui
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getMedia()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
-                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>`
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia">Export RAW</button>`
         document.querySelector("#runContainer").innerHTML = buttons
     }
 
@@ -120,5 +121,10 @@ class MediaEnumerate {
         })
 
         download(csvData.join("\n"), `media_${app.getDomainName()}.csv`, "text/csv")
+    }
+
+    async exportRAW() {
+        let data = JSON.stringify(this.store)
+        download(data, `media_${app.getDomainName()}.json`, "application/json")
     }
 }

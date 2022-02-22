@@ -33,6 +33,7 @@ class UserEnumerate {
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.checkWithURL()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
+                       <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
                         `
         document.querySelector("#runContainer").innerHTML = buttons
     }
@@ -101,5 +102,10 @@ class UserEnumerate {
         })
 
         download(csvData.join("\n"), `users_${app.getDomainName()}.csv`, "text/csv")
+    }
+
+    async exportRAW() {
+        let data = JSON.stringify(this.store)
+        download(data, `users_${app.getDomainName()}.json`, "application/json")
     }
 }
