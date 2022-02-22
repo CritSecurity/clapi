@@ -6,6 +6,8 @@ class Application {
     }
 
     setDomain(url) {
+        url = url.replace(new RegExp("/s"), "")
+
         if (url == "") {
             this.targetDomain = null
             return
@@ -19,8 +21,14 @@ class Application {
             url += "/"
         }
 
-        this.targetDomain = url
-        notification(`Die Domain "${url}" wurde als Ziel gesetzt.`)
+        if (url.match("https?:\\/\\/(?:www\\.)?([-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b)*\\/")) {
+            this.targetDomain = url
+            notification(`Die Domain "${url}" wurde als Ziel gesetzt.`)
+        } else {
+            notification("Ungültige Domain")
+        }
+
+
     }
 
     loadModule(moduleName) {
