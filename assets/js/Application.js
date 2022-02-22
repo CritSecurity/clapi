@@ -8,7 +8,7 @@ class Application {
     setDomain(url) {
         url = url.replace(new RegExp("/s"), "")
 
-        if (url == "") {
+        if (url === "") {
             this.targetDomain = null
             return
         }
@@ -48,6 +48,7 @@ class Application {
 
         if (this.currentModule) {
             this.currentModule.render()
+            this.currentModule.executed = false
             this.currentModule.getKeyName()
         }
     }
