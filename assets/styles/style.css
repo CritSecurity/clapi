@@ -111,6 +111,11 @@ header .menuItem img {
     background-color: darkred;
 }
 
+#loadingIndicator .spinner-border {
+    width: 30px;
+    height: 30px;
+    vertical-align: -10px;
+}
 
 #outputField table {
     width: 80%;
