@@ -3,6 +3,7 @@ class UserEnumerate {
         this.targetNode = targetNode
         this.executed = false
         this.keyname = this.getKeyName()
+        this.store = null
 
         if (localStorage.getItem(this.keyname)) {
             this.executed = true
@@ -42,8 +43,8 @@ class UserEnumerate {
 
         if (this.executed) {
             // already run, load from persistence to avoid another call to target
-            let data = await this.load()
-            usersHTML = this.renderResults(data)
+            this.store = await this.load()
+            usersHTML = this.renderResults(this.store)
 
         } else {
             let url = app.targetDomain
@@ -82,11 +83,18 @@ class UserEnumerate {
     }
 
     persist(data) {
-        localStorage.setItem(this.getKeyName(), JSON.stringify(data))
+        this.store = data
+        try {
+            localStorage.setItem(this.getKeyName(), JSON.stringify(data))
+        } catch (e) {
+            console.error(e)
+            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.")
+        }
+
     }
 
     async exportCSV() {
-        let data = await this.load()
+        let data = this.store
         let csvData = ["id;name;slug"]
         data.forEach(user => {
             csvData.push(`${user.id};${user.name};${user.slug}`)

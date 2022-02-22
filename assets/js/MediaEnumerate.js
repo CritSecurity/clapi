@@ -3,6 +3,7 @@ class MediaEnumerate {
         this.targetNode = targetNode
         this.executed = false
         this.keyname = this.getKeyName()
+        this.store = null
 
         if (localStorage.getItem(this.keyname)) {
             this.executed = true
@@ -39,8 +40,8 @@ class MediaEnumerate {
         window.displaySpinner()
         let mediaHTML = "nichts gefunden"
         if (this.executed) {
-            let data = await this.load()
-            mediaHTML = this.renderResults(data)
+            this.store = await this.load()
+            mediaHTML = this.renderResults(this.store)
 
         } else {
             let pageNumber = 1
@@ -95,15 +96,24 @@ class MediaEnumerate {
     }
 
     async load() {
-        return JSON.parse(localStorage.getItem(this.keyname))
+        let data = JSON.parse(localStorage.getItem(this.keyname))
+        this.store = data
+        return data
     }
 
     persist(data) {
-        localStorage.setItem(this.keyname, JSON.stringify(data))
+        this.store = data
+        try {
+            localStorage.setItem(this.getKeyName(), JSON.stringify(data))
+        } catch (e) {
+            console.error(e)
+            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.")
+        }
+
     }
 
     async exportCSV() {
-        let data = await this.load()
+        let data = this.store
         let csvData = ["filename;mime;uploaded;url"]
         data.forEach(media => {
             csvData.push(`${media.slug};${media.mime_type};${media.date};${media.source_url}`)
