@@ -4,7 +4,9 @@ function notification(notificationText, duration) {
     }
     let notificationBox = document.querySelector("#notificationBox")
     notificationBox.querySelector("#message").innerText = notificationText
+    notificationBox.classList.remove('flyOut')
     notificationBox.style.display = 'block'
+    notificationBox.classList.add('flyIn')
     if (duration === 0) {
 
     } else {
@@ -17,8 +19,15 @@ function notification(notificationText, duration) {
 function hideNotification() {
 
     let notificationBox = document.querySelector("#notificationBox")
-    notificationBox.style.display = 'none'
-    notificationBox.querySelector("#message").innerText = ""
+    notificationBox.classList.remove('flyIn')
+    notificationBox.classList.add('flyOut')
+    window.setTimeout(() => {
+
+        notificationBox.classList.remove('flyIn', 'flyOut')
+        notificationBox.style.display = 'none'
+        notificationBox.querySelector("#message").innerText = ""
+    }, 950)
+
 }
 
 function displaySpinner() {

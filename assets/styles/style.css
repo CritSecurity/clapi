@@ -90,6 +90,7 @@ header .menuItem img {
     top: 70px;
     right: 15px;
     z-index: 10000;
+    overflow: hidden;
 }
 
 #notificationBox {
@@ -109,6 +110,36 @@ header .menuItem img {
 
 #notificationBox:active {
     background-color: darkred;
+}
+
+@keyframes notificationFlyIn {
+    from {
+        margin-right: -450px;
+    }
+    to {
+        margin-right: 0px;
+    }
+
+}
+
+@keyframes notificationFlyOut {
+    from {
+        margin-right: 0px;
+    }
+    to {
+        margin-right: -450px;
+    }
+
+}
+
+.flyIn {
+    animation-name: notificationFlyIn;
+    animation-duration: 1s;
+}
+
+.flyOut {
+    animation-name: notificationFlyOut;
+    animation-duration: 1s;
 }
 
 #loadingIndicator .spinner-border {
