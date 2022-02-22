@@ -5,11 +5,17 @@ class UserEnumerate {
     }
 
     render() {
-        this.targetNode.innerHTML = `<span id="spinner"></span>`
         let ui = `<div id="outputField">
-            <h2>Enumerate User Names</h2>
-            <ul>
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Slug</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>`
         this.targetNode.innerHTML = ui
         document.querySelector("#runContainer").innerHTML = `<button class="btn btn-primary" onclick="app.currentModule.checkWithURL()" id="checkButton">Run</button>`
@@ -17,21 +23,45 @@ class UserEnumerate {
 
     async checkWithURL() {
         window.displaySpinner()
-        let url = app.targetDomain
-        let apiURL = url + "wp-json/wp/v2/users"
-        let res = await fetch(apiURL, {method: "GET"})
-        if ((await res).ok) {
-            res = await res.json()
-            let usersHTML = ""
-            res.forEach(user => {
-                let currentUserHTML = `<li>id: ${user.id} - ${user.name}</li>`
-                usersHTML += currentUserHTML
-            })
+        let usersHTML = "nichts gefunden"
 
-            document.querySelector("#outputField ul").innerHTML = usersHTML
+        if (this.executed) {
+            // already run, load from persistence to avoid another call to target
+            let data = await this.load()
+            usersHTML = this.renderResults(data)
+
         } else {
-            document.querySelector("#outputField ul").innerHTML = "nichts gefunden"
+            let url = app.targetDomain
+            let apiURL = url + "wp-json/wp/v2/users?orderby=id"
+            let res = await fetch(apiURL, {method: "GET"})
+            if ((await res).ok) {
+                res = await res.json()
+
+                this.executed = true
+                usersHTML = this.renderResults(res)
+                this.persist(res)
+            }
         }
+
+        // render results / data
+        document.querySelector("#outputField table tbody").innerHTML = usersHTML
         window.hideSpinner()
+    }
+
+    renderResults(data) {
+        let usersHTML = ""
+        data.forEach(user => {
+            let currentUserHTML = `<tr><td>${user.id}</td><td>${user.name}</td><td>${user.slug}</td></tr>`
+            usersHTML += currentUserHTML
+        })
+        return usersHTML
+    }
+
+    async load() {
+        return JSON.parse(localStorage.getItem("userenumerate"))
+    }
+
+    persist(data) {
+        localStorage.setItem("userenumerate", JSON.stringify(data))
     }
 }
