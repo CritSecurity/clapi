@@ -2,6 +2,11 @@ class UserEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
+
+        if (localStorage.getItem("userenumerate")) {
+            this.executed = true
+            this.checkWithURL()
+        }
     }
 
     render() {
