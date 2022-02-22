@@ -16,10 +16,9 @@ class MediaEnumerate {
     }
 
     render() {
-        this.targetNode.innerHTML = `<span id="spinner"></span>`
         let ui = `<div id="outputField">
             <h2>Enumerate Uploaded Media</h2>
-            <table>
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr><th>Filename</th><th>MIME</th><th>Uploaded</th></tr>
                 </thead>

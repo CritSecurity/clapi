@@ -113,7 +113,7 @@ header .menuItem img {
 }
 
 #outputField table tbody tr:nth-child(odd) {
-    background-color: var(--cs_lightblue);
+    /*background-color: var(--cs_lightblue);*/
 }
 
 
