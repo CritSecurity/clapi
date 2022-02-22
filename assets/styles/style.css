@@ -89,6 +89,7 @@ header .menuItem img {
     position: fixed;
     top: 70px;
     right: 15px;
+    z-index: 10000;
 }
 
 #notificationBox {
@@ -100,6 +101,14 @@ header .menuItem img {
     padding: 5px;
     display: none;
 
+}
+
+#notificationBox:hover {
+    cursor: pointer;
+}
+
+#notificationBox:active {
+    background-color: darkred;
 }
 
 
