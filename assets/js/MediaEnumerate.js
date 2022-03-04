@@ -7,7 +7,7 @@ class MediaEnumerate {
         this.targetDomain = targetDomain
 
 
-        console.info("loaded module: EndpointEnumerate")
+        console.info("loaded module: MediaEnumerate")
     }
 
     activate() {

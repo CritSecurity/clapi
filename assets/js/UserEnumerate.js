@@ -7,7 +7,7 @@ class UserEnumerate {
         this.targetDomain = targetDomain
 
 
-        console.info("loaded module: EndpointEnumerate")
+        console.info("loaded module: UserEnumerate")
     }
 
     activate() {
