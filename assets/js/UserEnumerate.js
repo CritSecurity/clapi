@@ -1,15 +1,22 @@
 class UserEnumerate {
-    constructor(targetNode) {
+    constructor(targetNode, targetDomain) {
         this.targetNode = targetNode
         this.executed = false
         this.keyname = null
         this.store = null
+        this.targetDomain = targetDomain
 
 
         console.info("loaded module: EndpointEnumerate")
     }
 
     activate() {
+        if (this.targetDomain !== app.targetDomain) {
+            this.store = null
+        }
+
+        this.targetDomain = app.targetDomain
+
         this.getKeyName()
         if (localStorage.getItem(this.keyname) || this.store) {
             this.executed = true
@@ -55,8 +62,12 @@ class UserEnumerate {
             if (localStorage.getItem(this.getKeyName())) {
                 this.store = await this.load()
             }
+            try {
+                usersHTML = this.renderResults(this.store)
+            } catch (e) {
+                notification("No valid data")
+            }
 
-            usersHTML = this.renderResults(this.store)
 
         } else {
             let url = app.targetDomain

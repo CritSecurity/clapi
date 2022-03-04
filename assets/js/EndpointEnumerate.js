@@ -1,15 +1,22 @@
 class EndpointEnumerate {
-    constructor(targetNode) {
+    constructor(targetNode, targetDomain) {
         this.targetNode = targetNode
         this.executed = false
         this.keyname = null
         this.store = null
+        this.targetDomain
 
 
         console.info("loaded module: EndpointEnumerate")
     }
 
     activate() {
+        if (this.targetDomain !== app.targetDomain) {
+            this.store = null
+        }
+
+        this.targetDomain = app.targetDomain
+
         this.getKeyName()
         if (localStorage.getItem(this.keyname) || this.store) {
             this.executed = true
@@ -62,7 +69,11 @@ class EndpointEnumerate {
             if (localStorage.getItem(this.getKeyName())) {
                 this.store = await this.load()
             }
-            endpointsHTML = this.renderResults(this.store)
+            try {
+                endpointsHTML = this.renderResults(this.store)
+            } catch (e) {
+                notification("No valid data")
+            }
         } else {
             try {
                 let url = app.targetDomain + 'wp-json'
