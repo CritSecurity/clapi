@@ -2,10 +2,16 @@ class MediaEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
-        this.keyname = this.getKeyName()
+        this.keyname = null
         this.store = null
 
-        if (localStorage.getItem(this.keyname)) {
+
+        console.info("loaded module: EndpointEnumerate")
+    }
+
+    activate() {
+        this.getKeyName()
+        if (localStorage.getItem(this.keyname) || this.store) {
             this.executed = true
             this.getMedia()
         }
@@ -42,30 +48,37 @@ class MediaEnumerate {
         window.displaySpinner()
         let mediaHTML = "nichts gefunden"
         if (this.executed) {
-            this.store = await this.load()
+            if (localStorage.getItem(this.getKeyName())) {
+                this.store = await this.load()
+            }
             mediaHTML = this.renderResults(this.store)
 
         } else {
             let pageNumber = 1
             let hasNextPage = true
             let foundMedia = []
-            while (hasNextPage) {
-                let url = app.targetDomain + `wp-json/wp/v2/media/?page=${pageNumber}&per_page=100`
-                let res = await fetch(url, {method: "GET"})
-                if ((await res).ok) {
-                    res = await res.json()
-                    foundMedia.push.apply(foundMedia, res)
-                    pageNumber++
+            try {
+                while (hasNextPage) {
+                    let url = app.targetDomain + `wp-json/wp/v2/media/?page=${pageNumber}&per_page=100`
+                    let res = await fetch(url, {method: "GET"})
+                    if (res.ok) {
+                        res = await res.json()
+                        foundMedia.push.apply(foundMedia, res)
+                        pageNumber++
 
 
-                } else {
-                    hasNextPage = false
+                    } else {
+                        hasNextPage = false
+                    }
+
                 }
-
+                this.executed = true
+                mediaHTML = this.renderResults(foundMedia)
+                this.persist(foundMedia)
+            } catch (e) {
+                notification(e.toString())
             }
-            this.executed = true
-            mediaHTML = this.renderResults(foundMedia)
-            this.persist(foundMedia)
+
 
         }
 

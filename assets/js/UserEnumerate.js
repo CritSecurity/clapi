@@ -2,12 +2,18 @@ class UserEnumerate {
     constructor(targetNode) {
         this.targetNode = targetNode
         this.executed = false
-        this.keyname = this.getKeyName()
+        this.keyname = null
         this.store = null
 
-        if (localStorage.getItem(this.keyname)) {
+
+        console.info("loaded module: EndpointEnumerate")
+    }
+
+    activate() {
+        this.getKeyName()
+        if (localStorage.getItem(this.keyname) || this.store) {
             this.executed = true
-            this.checkWithURL()
+            this.getUsers()
         }
     }
 
@@ -31,7 +37,7 @@ class UserEnumerate {
             </table>
         </div>`
         this.targetNode.innerHTML = ui
-        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.checkWithURL()" id="checkButton">Run</button>
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getUsers()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
@@ -40,26 +46,36 @@ class UserEnumerate {
         document.querySelector("#runContainer").innerHTML = buttons
     }
 
-    async checkWithURL() {
+    async getUsers() {
         window.displaySpinner()
         let usersHTML = "nichts gefunden"
 
         if (this.executed) {
             // already run, load from persistence to avoid another call to target
-            this.store = await this.load()
+            if (localStorage.getItem(this.getKeyName())) {
+                this.store = await this.load()
+            }
+
             usersHTML = this.renderResults(this.store)
 
         } else {
             let url = app.targetDomain
             let apiURL = url + "wp-json/wp/v2/users?orderby=id"
-            let res = await fetch(apiURL, {method: "GET"})
-            if ((await res).ok) {
-                res = await res.json()
+            try {
+                let res = await fetch(apiURL, {method: "GET"})
+                if (res && res.ok) {
+                    res = await res.json()
 
-                this.executed = true
-                usersHTML = this.renderResults(res)
-                this.persist(res)
+                    this.executed = true
+                    usersHTML = this.renderResults(res)
+                    this.persist(res)
+                } else {
+
+                }
+            } catch (e) {
+                notification(e.toString())
             }
+
         }
 
         // render results / data
@@ -78,7 +94,7 @@ class UserEnumerate {
 
     forceRun() {
         this.executed = false
-        this.checkWithURL()
+        this.getUsers()
     }
 
     async load() {
