@@ -4,9 +4,7 @@ class EndpointEnumerate {
         this.executed = false
         this.keyname = null
         this.store = null
-        this.targetDomain
-
-
+        this.targetDomain = targetDomain
         console.info("loaded module: EndpointEnumerate")
     }
 

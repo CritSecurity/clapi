@@ -43,26 +43,10 @@ class Application {
 
     loadModule(moduleName) {
 
-
-        /*
-        if (moduleName === 'userenumerate') {
-            this.targetNode.innerHTML = `<span id="spinner"></span>`
-            this.currentModule = new UserEnumerate(this.targetNode)
-
-        }
-
-        if (moduleName === 'mediaenumerate') {
-            this.targetNode.innerHTML = `<span id="spinner"></span>`
-            this.currentModule = new MediaEnumerate(this.targetNode)
-
-        }
-
-        */
         this.currentModule = this.modules[moduleName]
 
         if (this.currentModule) {
             this.currentModule.render()
-            //this.currentModule.getKeyName()
             this.currentModule.activate()
         }
     }

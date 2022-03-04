@@ -5,8 +5,6 @@ class MediaEnumerate {
         this.keyname = null
         this.store = null
         this.targetDomain = targetDomain
-
-
         console.info("loaded module: MediaEnumerate")
     }
 
