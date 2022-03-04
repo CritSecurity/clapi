@@ -3,6 +3,12 @@ class Application {
         this.targetDomain = null
         this.targetNode = targetNode
         this.currentModule = null
+
+        this.modules = {
+            "userenumerate": new UserEnumerate(this.targetNode),
+            "mediaenumerate": new MediaEnumerate(this.targetNode),
+            "endpointenumerate": new EndpointEnumerate(this.targetNode)
+        }
     }
 
     setDomain(url) {
@@ -35,6 +41,7 @@ class Application {
     loadModule(moduleName) {
 
 
+        /*
         if (moduleName === 'userenumerate') {
             this.targetNode.innerHTML = `<span id="spinner"></span>`
             this.currentModule = new UserEnumerate(this.targetNode)
@@ -47,9 +54,13 @@ class Application {
 
         }
 
+        */
+        this.currentModule = this.modules[moduleName]
+
         if (this.currentModule) {
             this.currentModule.render()
-            this.currentModule.getKeyName()
+            //this.currentModule.getKeyName()
+            this.currentModule.activate()
         }
     }
 
