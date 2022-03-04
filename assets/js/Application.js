@@ -5,9 +5,9 @@ class Application {
         this.currentModule = null
 
         this.modules = {
-            "userenumerate": new UserEnumerate(this.targetNode),
-            "mediaenumerate": new MediaEnumerate(this.targetNode),
-            "endpointenumerate": new EndpointEnumerate(this.targetNode)
+            "userenumerate": new UserEnumerate(this.targetNode, this.targetDomain),
+            "mediaenumerate": new MediaEnumerate(this.targetNode, this.targetDomain),
+            "endpointenumerate": new EndpointEnumerate(this.targetNode, this.targetDomain)
         }
     }
 
@@ -29,7 +29,10 @@ class Application {
 
         if (url.match("https?:\\/\\/(?:www\\.)?([-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b)*\\/")) {
             this.targetDomain = url
-            if (this.currentModule) { this.currentModule.executed = false }
+            if (this.currentModule) {
+                this.currentModule.executed = false
+                this.currentModule.activate()
+            }
             notification(`Die Domain "${url}" wurde als Ziel gesetzt.`)
         } else {
             notification("Ungültige Domain")
