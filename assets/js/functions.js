@@ -59,15 +59,19 @@ function download(data, filename, type) {
 }
 
 function toggleLightMode() {
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
+
     if (document.body.classList.contains('dark')) {
         // switch to light
         document.body.classList.remove("dark")
+        metaThemeColor.setAttribute("content", "#154194")
 
 
 
     } else {
         // switch to dark
         document.body.classList.add("dark")
+        metaThemeColor.setAttribute("content", "#001636")
 
     }
 }
