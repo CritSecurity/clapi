@@ -1,33 +1,11 @@
-class UserEnumerate {
+class UserEnumerate extends Module{
     constructor(targetNode, targetDomain) {
-        this.targetNode = targetNode
-        this.executed = false
-        this.keyname = null
-        this.store = null
-        this.targetDomain = targetDomain
-        console.info("loaded module: UserEnumerate")
+        super(targetNode, targetDomain);
     }
 
-    activate() {
-        if (this.targetDomain !== app.targetDomain) {
-            this.store = null
-        }
 
-        this.targetDomain = app.targetDomain
 
-        this.getKeyName()
-        if (localStorage.getItem(this.keyname) || this.store) {
-            this.executed = true
-            this.getUsers()
-        }
-    }
-
-    getKeyName() {
-        this.keyname = `${app.getDomainName()}_userenumerate`
-        return this.keyname
-    }
-
-    render() {
+    buildUI() {
         let ui = `<div id="outputField">
             <h2>Enumerate Users</h2>
             <table  class="table table-striped table-hover">
@@ -41,17 +19,18 @@ class UserEnumerate {
                 </tbody>
             </table>
         </div>`
-        this.targetNode.innerHTML = ui
-        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getUsers()" id="checkButton">Run</button>
+
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearUser">Clear</button>
                         `
-        document.querySelector("#runContainer").innerHTML = buttons
+
+        return {moduleUI: ui, moduleButtons: buttons}
     }
 
-    async getUsers() {
+    async run() {
         window.displaySpinner()
         let usersHTML = "nichts gefunden"
 
@@ -101,44 +80,13 @@ class UserEnumerate {
         return usersHTML
     }
 
-    forceRun() {
-        this.executed = false
-        this.getUsers()
-    }
-
-    async load() {
-        return JSON.parse(localStorage.getItem(this.getKeyName()))
-    }
-
-    persist(data) {
-        this.store = data
-        try {
-            localStorage.setItem(this.getKeyName(), JSON.stringify(data))
-        } catch (e) {
-            console.error(e)
-            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.", 0)
-        }
-
-    }
-
-    async exportCSV() {
+    renderCSV() {
         let data = this.store
         let csvData = ["id;name;slug"]
         data.forEach(user => {
             csvData.push(`${user.id};${user.name};${user.slug}`)
         })
-
-        download(csvData.join("\n"), `users_${app.getDomainName()}.csv`, "text/csv")
+        return csvData.join("\n")
     }
 
-    async exportRAW() {
-        let data = JSON.stringify(this.store)
-        download(data, `users_${app.getDomainName()}.json`, "application/json")
-    }
-
-    clearPersistence() {
-        if (confirm("Möchten Sie die Daten der User Enumeration wirklich löschen?")) {
-            localStorage.removeItem(this.getKeyName())
-        }
-    }
 }
