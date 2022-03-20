@@ -36,6 +36,10 @@ h1, h2, h3 {
     text-align: center;
 }
 
+header #menuToggle {
+    display: none;
+}
+
 header ul {
     list-style-type: none;
     padding: 0;
@@ -212,4 +216,73 @@ body.dark #notificationBox:active {
 body.dark #urlField {
     background-color: #26282a;
     color: var(--chalk_white);
+}
+
+
+@media screen and (max-device-width: 500px) {
+    header #menuToggle {
+        display: inline-block;
+        font-size: larger;
+    }
+
+    #moduleList {
+        display: none;
+    }
+
+    #lightmodeSwitch {
+        position: fixed;
+        right: -4px;
+        top: -4px;
+    }
+
+    #urlField {
+        width: 150px;
+    }
+
+    header ul {
+        margin-left: 0px;
+    }
+
+
+    header ul li {
+        margin-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        display: compact;
+
+    }
+
+    header #moduleList {
+        background-color: var(--cs_blue);
+        margin-left: -15px;
+    }
+
+    body.dark header #moduleList {
+        background-color: var(--cs_blue_darkmode);
+    }
+
+    header #moduleList li {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-bottom: 2px;
+        background-color: #154194;
+        border-radius: 8px;
+        border: 1px solid var(--chalk_white)
+    }
+
+    body.dark header #moduleList li {
+        background-color: #154194;
+    }
+
+    #mount {
+        margin-top: 110px;
+        height: 75vh;
+        left: 0px;
+        width: 100%;
+    }
+
+    #outputField table {
+        width: 100%;
+    }
+
 }

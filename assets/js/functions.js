@@ -75,3 +75,13 @@ function toggleLightMode() {
 
     }
 }
+
+function toggleMenu() {
+    let menuList = document.querySelector("#moduleList")
+    if (menuList.style.display === 'none') {
+        menuList.style.display = "inline-block"
+    } else {
+        menuList.style.display = "none"
+    }
+
+}
