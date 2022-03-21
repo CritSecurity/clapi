@@ -225,6 +225,10 @@ body.dark #urlField {
         font-size: larger;
     }
 
+    #nameTitle {
+        display: none;
+    }
+
     #moduleList {
         display: none;
     }
@@ -236,7 +240,7 @@ body.dark #urlField {
     }
 
     #urlField {
-        width: 150px;
+        width: 185px;
     }
 
     header ul {
