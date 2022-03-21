@@ -82,6 +82,11 @@ header .menuItem img {
 
 }
 
+#runContainer {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
 #mount {
     position: relative;
     display: block;
@@ -225,7 +230,7 @@ body.dark #urlField {
         font-size: larger;
     }
 
-    #nameTitle {
+    #nameTitle, #moduleTitle {
         display: none;
     }
 
@@ -258,7 +263,11 @@ body.dark #urlField {
 
     header #moduleList {
         background-color: var(--cs_blue);
-        margin-left: -15px;
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        top: 50px;
+        margin: 0px;
     }
 
     body.dark header #moduleList {
@@ -279,7 +288,7 @@ body.dark #urlField {
     }
 
     #mount {
-        margin-top: 110px;
+        margin-top: 10px;
         height: 75vh;
         left: 0px;
         width: 100%;
