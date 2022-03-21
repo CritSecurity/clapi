@@ -4,7 +4,6 @@ class UserEnumerate extends Module{
     }
 
 
-
     buildUI() {
         let ui = `<div id="outputField">
             <h2>Enumerate Users</h2>

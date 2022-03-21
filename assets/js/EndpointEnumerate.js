@@ -1,33 +1,10 @@
-class EndpointEnumerate {
+class EndpointEnumerate extends Module {
     constructor(targetNode, targetDomain) {
-        this.targetNode = targetNode
-        this.executed = false
-        this.keyname = null
-        this.store = null
-        this.targetDomain = targetDomain
-        console.info("loaded module: EndpointEnumerate")
+        super(targetNode, targetDomain);
     }
 
-    activate() {
-        if (this.targetDomain !== app.targetDomain) {
-            this.store = null
-        }
 
-        this.targetDomain = app.targetDomain
-
-        this.getKeyName()
-        if (localStorage.getItem(this.keyname) || this.store) {
-            this.executed = true
-            this.getEndpoints()
-        }
-    }
-
-    getKeyName() {
-        this.keyname = `${app.getDomainName()}_endpointenumerate`
-        return this.keyname
-    }
-
-    render() {
+    buildUI() {
         let ui = `<div id="outputField">
             <h2>Enumerate REST Endpoints</h2>
             <table  class="table table-striped table-hover">
@@ -41,14 +18,15 @@ class EndpointEnumerate {
                 </tbody>
             </table>
         </div>`
-        this.targetNode.innerHTML = ui
-        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getEndpoints()" id="checkButton">Run</button>
+
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearUser">Clear</button>
                         `
-        document.querySelector("#runContainer").innerHTML = buttons
+
+        return {moduleUI: ui, moduleButtons: buttons}
     }
 
     renderResults(data) {
@@ -60,7 +38,7 @@ class EndpointEnumerate {
         return endpointsHTML
     }
 
-    async getEndpoints() {
+    async run() {
         window.displaySpinner()
         let endpointsHTML = ""
         if (this.executed) {
@@ -92,44 +70,14 @@ class EndpointEnumerate {
         window.hideSpinner()
     }
 
-    forceRun() {
-        this.executed = false
-        this.getEndpoints()
-    }
-
-    async load() {
-        return JSON.parse(localStorage.getItem(this.getKeyName()))
-    }
-
-    persist(data) {
-        this.store = data
-        try {
-            localStorage.setItem(this.getKeyName(), JSON.stringify(data))
-        } catch (e) {
-            console.error(e)
-            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.", 0)
-        }
-    }
-
-    async exportCSV() {
+    renderCSV() {
         let data = this.store
         let csvData = ["name"]
         data.forEach(endpoint => {
             csvData.push(`${endpoint}`)
         })
 
-        download(csvData.join("\n"), `endpoints_${app.getDomainName()}.csv`, "text/csv")
-    }
-
-    async exportRAW() {
-        let data = JSON.stringify(this.store)
-        download(data, `endpoints_${app.getDomainName()}.json`, "application/json")
-    }
-
-    clearPersistence() {
-        if (confirm("Möchten Sie die Daten der Endpoint Enumeration wirklich löschen?")) {
-            localStorage.removeItem(this.getKeyName())
-        }
+        return csvData.join("\n")
     }
 
 }

@@ -1,33 +1,9 @@
-class MediaEnumerate {
+class MediaEnumerate extends Module {
     constructor(targetNode, targetDomain) {
-        this.targetNode = targetNode
-        this.executed = false
-        this.keyname = null
-        this.store = null
-        this.targetDomain = targetDomain
-        console.info("loaded module: MediaEnumerate")
+        super(targetNode, targetDomain);
     }
 
-    activate() {
-        if (this.targetDomain !== app.targetDomain) {
-            this.store = null
-        }
-
-        this.targetDomain = app.targetDomain
-
-        this.getKeyName()
-        if (localStorage.getItem(this.keyname) || this.store) {
-            this.executed = true
-            this.getMedia()
-        }
-    }
-
-    getKeyName() {
-        this.keyname = `${app.getDomainName()}_mediaenumerate`
-        return this.keyname
-    }
-
-    render() {
+    buildUI() {
         let ui = `<div id="outputField">
             <h2>Enumerate Uploaded Media</h2>
             <table class="table table-striped table-hover">
@@ -40,16 +16,17 @@ class MediaEnumerate {
                 </tbody>
             </table>
         </div>`
-        this.targetNode.innerHTML = ui
-        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.getMedia()" id="checkButton">Run</button>
+
+        let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia">Export RAW</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearMedia">Clear</button>`
-        document.querySelector("#runContainer").innerHTML = buttons
+
+        return {moduleUI: ui, moduleButtons: buttons}
     }
 
-    async getMedia() {
+    async run() {
         window.displaySpinner()
         let mediaHTML = "nichts gefunden"
         if (this.executed) {
@@ -89,15 +66,10 @@ class MediaEnumerate {
                 notification(e.toString())
             }
 
-
         }
-
-
 
         document.querySelector("#outputField table tbody").innerHTML = mediaHTML
         window.hideSpinner()
-
-
 
     }
 
@@ -115,46 +87,14 @@ class MediaEnumerate {
         return mediaHTML
     }
 
-    forceRun() {
-        this.executed = false
-        this.getMedia()
-    }
-
-    async load() {
-        let data = JSON.parse(localStorage.getItem(this.keyname))
-        this.store = data
-        return data
-    }
-
-    persist(data) {
-        this.store = data
-        try {
-            localStorage.setItem(this.getKeyName(), JSON.stringify(data))
-        } catch (e) {
-            console.error(e)
-            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.", 0)
-        }
-
-    }
-
-    async exportCSV() {
+    async renderCSV() {
         let data = this.store
         let csvData = ["filename;mime;uploaded;url"]
         data.forEach(media => {
             csvData.push(`${media.slug};${media.mime_type};${media.date};${media.source_url}`)
         })
 
-        download(csvData.join("\n"), `media_${app.getDomainName()}.csv`, "text/csv")
+        return csvData.join("\n")
     }
 
-    async exportRAW() {
-        let data = JSON.stringify(this.store)
-        download(data, `media_${app.getDomainName()}.json`, "application/json")
-    }
-
-    clearPersistence() {
-        if (confirm("Möchten Sie die Daten der Media Enumeration wirklich löschen?")) {
-            localStorage.removeItem(this.getKeyName())
-        }
-    }
 }
