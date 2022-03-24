@@ -45,7 +45,7 @@
     </div>
     <div class="menuItem" id="nameTitle"><span>CLAPI</span></div>
     <ul>
-        <li id="urlFieldContainer"><input type="text" class="form-control me-2" name="urlField" id="urlField" placeholder="Domain..." onchange="app.setDomain(this.value)"></li>
+        <li id="urlFieldContainer"><input type="text" class="form-control me-2" name="urlField" id="urlField" list="history" placeholder="Domain..." onchange="app.setDomain(this.value)"></li>
     </ul>
     <span id="menuToggle" onclick="toggleMenu()">&#9776;</span>
     <ul id="moduleList" style="display: inline-block">
@@ -62,6 +62,10 @@
     <div id="lightmodeSwitch">
         <button class="btn btn-secondary" onclick="toggleLightMode()">&#9788; / &#9790;</button>
     </div>
+
+    <datalist id="history">
+
+    </datalist>
 
 </header>
 
@@ -86,6 +90,9 @@
 <script>
     // init application
     app = new Application(document.querySelector("#mount"))
+
+    app.buildHistoryUI()
+
 
 </script>
 

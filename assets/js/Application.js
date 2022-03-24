@@ -36,6 +36,7 @@ class Application {
                 this.currentModule.executed = false
                 this.currentModule.activate()
             }
+            this.appendHistory(url, this.getDomainName(url))
             notification(`Die Domain "${url}" wurde als Ziel gesetzt.`)
         } else {
             notification("Ungültige Domain")
@@ -62,5 +63,28 @@ class Application {
             return "nodomain"
         }
 
+    }
+
+    appendHistory(url, name) {
+        let history = JSON.parse(localStorage.getItem("history"))
+        if (history === null) {
+            history = {}
+        }
+        let historyItem = {"url": url, "name": name}
+        history[name] = historyItem
+        localStorage.setItem("history", JSON.stringify(history))
+        this.buildHistoryUI()
+
+    }
+
+    buildHistoryUI() {
+        let history = JSON.parse(localStorage.getItem("history"))
+        if (history) {
+            let historyHTML = ""
+            Object.entries(history).forEach(historyItem => {
+                historyHTML += `<option value="${historyItem[1].url}">${historyItem[1].name}</option>`
+            })
+            document.querySelector("#history").innerHTML = historyHTML
+        }
     }
 }
