@@ -15,14 +15,15 @@ class Application {
     }
 
     setDomain(url) {
-        url = url.replace(new RegExp("/s"), "")
+        const reg = /\s/g
+        url = url.replace(reg, "")
 
         if (url === "") {
             this.targetDomain = null
             return
         }
 
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        if (!(url.startsWith("http://")) && !(url.startsWith("https://"))) {
             url = 'https://' + url
         }
 
