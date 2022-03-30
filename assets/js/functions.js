@@ -89,3 +89,11 @@ function toggleMenu() {
 function capitalise(str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+function showCredits() {
+    document.querySelector("#credits").style.display = "block"
+}
+
+function hideCredits() {
+    document.querySelector("#credits").style.display = "none"
+}
