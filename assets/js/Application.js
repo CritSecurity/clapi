@@ -38,9 +38,9 @@ class Application {
                 this.currentModule.activate()
             }
             this.appendHistory(url, this.getDomainName(url))
-            notification(`Die Domain "${url}" wurde als Ziel gesetzt.`)
+            notification(`Domain "${url}" was set as target.`)
         } else {
-            notification("Ungültige Domain")
+            notification("Invalid domain")
         }
 
 
@@ -60,7 +60,7 @@ class Application {
         if (this.targetDomain) {
             return this.targetDomain.replace("https://", "").replace("http://", "").replace(/\./g, "-").replace(/\//g, "")
         } else {
-            notification("Keine Zieldomain gesetzt")
+            notification("Target domain not set")
             return "nodomain"
         }
 

@@ -14,7 +14,7 @@ class Brute extends Module {
 
         let ui = `<div id="outputField">
             <h2>Brute Force PW Guess</h2>
-            <p>Export für Burp, direktes Bruteforcing aus dem Browser nicht möglich ohne Proxy (CORS)</p>
+            <p>Export for Burp, no direct bruteforcing possible due to CORS rules in browsers.</p>
             <h3>User:</h3>
             <table class="table table-striped">
                 <thead>
@@ -40,7 +40,6 @@ class Brute extends Module {
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
-                       <!--<button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>-->
                        <button class="btn btn-secondary" onclick="app.currentModule.stopRun()">Stop</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearUser">Clear</button>
                         `
@@ -59,7 +58,7 @@ class Brute extends Module {
 
     selectUser(userName) {
         app.share.username = userName
-        notification(`${userName} ausgewählt. Sie können das Modul jetzt ausführen.`)
+        notification(`${userName} chosen. You can now run the module.`)
     }
 
     generatePasswords(userName) {
@@ -108,7 +107,7 @@ class Brute extends Module {
     async run() {
         let userName = app.share.username
         if (!userName) {
-            notification("Kein Username ausgewählt")
+            notification("No username chosen")
             return
         }
         let pws = this.generatePasswords(userName)

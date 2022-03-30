@@ -31,7 +31,7 @@ class UserEnumerate extends Module{
 
     async run() {
         window.displaySpinner()
-        let usersHTML = "nichts gefunden"
+        let usersHTML = "nothing found"
 
         if (this.executed) {
             // already run, load from persistence to avoid another call to target

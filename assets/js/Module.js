@@ -60,7 +60,7 @@ class Module {
             localStorage.setItem(this.getKeyName(), JSON.stringify(data))
         } catch (e) {
             console.error(e)
-            notification("Fehler beim Speichern des Resultats. Sie sollten es sofort exportieren um keine Daten zu verlieren.", 0)
+            notification("Error while saving the result. You should export it right away to prevent data loss.", 0)
         }
 
     }
@@ -80,7 +80,7 @@ class Module {
     }
 
     clearPersistence() {
-        if (confirm(`Möchten Sie die Daten des Moduls ${this.constructor.name} wirklich löschen?`)) {
+        if (confirm(`Do you really want to delete all data of ${this.constructor.name}?`)) {
             localStorage.removeItem(this.getKeyName())
         }
     }

@@ -28,7 +28,7 @@ class MediaEnumerate extends Module {
 
     async run() {
         window.displaySpinner()
-        let mediaHTML = "nichts gefunden"
+        let mediaHTML = "nothing found"
         if (this.executed) {
             if (localStorage.getItem(this.getKeyName())) {
                 this.store = await this.load()
