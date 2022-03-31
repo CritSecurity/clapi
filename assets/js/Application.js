@@ -8,7 +8,6 @@ class Application {
             "userenumerate": new UserEnumerate(this.targetNode, this.targetDomain),
             "mediaenumerate": new MediaEnumerate(this.targetNode, this.targetDomain),
             "endpointenumerate": new EndpointEnumerate(this.targetNode, this.targetDomain),
-            "brute": new Brute(this.targetNode, this.targetDomain)
         }
 
         this.share = {}
