@@ -1,8 +1,8 @@
 {
   "name": "CLAPI",
   "short_name": "CLAPI",
-  "start_url": "./index.html",
-  "scope": "/",
+  "start_url": "/clapi/index.html",
+  "scope": "/clapi/",
   "description": "Scanner for Wordpress API leaks",
   "display": "standalone",
   "orientation": "portrait",
