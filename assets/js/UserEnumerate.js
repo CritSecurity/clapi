@@ -21,8 +21,8 @@ class UserEnumerate extends Module{
 
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
-                       <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser">Export CSV</button>
-                       <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser">Export RAW</button>
+                       <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVUser"><i class="bi bi-download"></i> CSV</button>
+                       <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWUser"><i class="bi bi-download"></i> RAW</button>
                        <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearUser">Clear</button>
                         `
 

@@ -19,8 +19,8 @@ class MediaEnumerate extends Module {
 
         let buttons = `<button class="btn btn-primary" onclick="app.currentModule.run()" id="checkButton">Run</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.forceRun()" id="checkButtonForce">Run -f</button>
-                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia">Export CSV</button>
-                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia">Export RAW</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportCSV()" id="exportCSVMedia"><i class="bi bi-download"></i> CSV</button>
+                        <button class="btn btn-secondary" onclick="app.currentModule.exportRAW()" id="exportRAWMedia"><i class="bi bi-download"></i> RAW</button>
                         <button class="btn btn-secondary" onclick="app.currentModule.clearPersistence()" id="clearMedia">Clear</button>`
 
         return {moduleUI: ui, moduleButtons: buttons}
