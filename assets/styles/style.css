@@ -119,6 +119,10 @@ header .menuItem img {
     margin-left: 5px;
 }
 
+#runContainer button {
+    margin-bottom: 5px;
+}
+
 #mount {
     position: relative;
     display: block;
@@ -307,6 +311,10 @@ body.dark .card {
         top: 50px;
         margin: 0px;
         z-index: 5000;
+    }
+
+    header li.moduleStarter:hover {
+        color: white;
     }
 
     body.dark header #moduleList {
