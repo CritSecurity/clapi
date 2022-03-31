@@ -130,7 +130,7 @@
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function() {
                 navigator.serviceWorker
-                    .register("/clapi/serviceWorker.js")
+                    .register("/clapi/serviceWorker.js", {scope: '/clapi/'})
                     .then(res => console.log("Github Pages: service worker registered"))
                     .catch(err => console.log("Github Pages: service worker not registered", err))
             })
