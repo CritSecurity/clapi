@@ -34,6 +34,7 @@ class Application {
             this.targetDomain = url
             if (this.currentModule) {
                 this.currentModule.executed = false
+                this.currentModule.render()
                 this.currentModule.activate()
             }
             this.appendHistory(url, this.getDomainName(url))
