@@ -32,6 +32,15 @@ footer img {
     height: 40px;
 }
 
+footer span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+footer span:hover {
+    cursor: pointer;
+}
+
 #credits {
     display: none;
     position: fixed;
@@ -131,6 +140,23 @@ header .menuItem img {
     height: 85vh;
     width: 90%;
     overflow-y: scroll;
+}
+
+.welcomeCard {
+    margin: 0 auto;
+}
+
+.welcomeCard pre {
+    word-break: break-word;
+    white-space: pre-wrap
+}
+
+#mount #welcomeCardMobile {
+    display: none;
+}
+
+#mount #welcomeCardDesktop {
+    display: block;
 }
 
 #notificationContainer {
@@ -336,9 +362,17 @@ body.dark .card {
 
     #mount {
         margin-top: 10px;
-        height: 75vh;
+        height: 80vh;
         left: 0px;
         width: 100%;
+    }
+
+    #mount #welcomeCardMobile {
+        display: block;
+    }
+
+    #mount #welcomeCardDesktop {
+        display: none;
     }
 
     #outputField table {

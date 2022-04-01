@@ -99,3 +99,29 @@ function showCredits() {
 function hideCredits() {
     document.querySelector("#credits").style.display = "none"
 }
+
+async function loadReadMe() {
+
+    let welcomeCard = `<div id="welcomeCardDesktop" class="card welcomeCard">
+            <div class="card-body">
+                <h5 class="card-title">Welcome</h5>
+                <p class="card-text">Add a target domain.<br /><br />README.md:<pre></pre></p>
+            </div>
+        </div>
+
+        <div id="welcomeCardMobile" class="card welcomeCard">
+            <div class="card-body">
+                <h5 class="card-title">Welcome</h5>
+                <p class="card-text">Add a target domain and open the top menu to see available modules<br /><br />README.md:<pre></pre></p>
+            </div>
+        </div>`
+    document.querySelector("#mount").innerHTML = welcomeCard
+    document.querySelector("#runContainer").innerHTML = ""
+
+    let res = await fetch("./README.md", {method: "GET"})
+    res = await res.text()
+    document.querySelectorAll("#mount .welcomeCard .card-body pre").forEach(pre => {
+        res = res.replace(/^!.*$/mg, "")
+        pre.innerText = res
+    })
+}
