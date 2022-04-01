@@ -33,7 +33,9 @@ class Application {
         if (url.match("https?:\\/\\/(?:www\\.)?([-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b)*\\/")) {
             this.targetDomain = url
             if (this.currentModule) {
-                this.currentModule.executed = false
+                Object.entries(this.modules).forEach(module => {
+                    module[1].executed = false
+                })
                 this.currentModule.render()
                 this.currentModule.activate()
             }
